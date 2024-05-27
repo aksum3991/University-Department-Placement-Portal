@@ -8,6 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Start session
+
 session_start();
 
 // Check if user is logged in as registrar
