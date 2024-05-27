@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set College Intake Capacity</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Set College Intake Capacity</h1>
+        <form action="set_college_capacity.php" method="POST">
+            <label for="college_id">College ID:</label>
+            <input type="number" id="college_id" name="college_id" required>
+
+            <label for="intake_capacity">Intake Capacity:</label>
+            <input type="number" id="intake_capacity" name="intake_capacity" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student Grades and Preferences</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Add Student Grades and Preferences</h1>
+        <form action="add_student_grades.php" method="POST">
+            <label for="student_id">Student ID:</label>
+            <input type="number" id="student_id" name="student_id" required>
+
+            <label for="first_semester_grade">First Semester Grade (out of 50%):</label>
+            <input type="number" step="0.01" id="first_semester_grade" name="first_semester_grade" required>
+
+            <label for="grade_12_exam">Grade 12 Entrance Exam Result (out of 20%):</label>
+            <input type="number" step="0.01" id="grade_12_exam" name="grade_12_exam" required>
+
+            <label for="preference_1">First Preference College ID:</label>
+            <input type="number" id="preference_1" name="preference_1" required>
+
+            <label for="preference_2">Second Preference College ID:</label>
+            <input type="number" id="preference_2" name="preference_2">
+
+            <label for="preference_3">Third Preference College ID:</label>
+            <input type="number" id="preference_3" name="preference_3">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
