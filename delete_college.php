@@ -7,18 +7,20 @@ if ($conn->connect_error) {
 }
 
 session_start();
-if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] != 2) {
+if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] === 3) {
+
     header("Location: login.html");
     exit();
 }
 
-$department_id = $_GET['id'];
 
-$stmt = $conn->prepare("DELETE FROM departments WHERE department_id=?");
-$stmt->bind_param("i", $department_id);
+$college_id = $_GET['id'];
+
+$stmt = $conn->prepare("DELETE FROM colleges WHERE college_id=?");
+$stmt->bind_param("i", $college_id);
 
 if ($stmt->execute()) {
-    header("Location: registrar.php");
+    header("Location: admin.php");
 } else {
     echo "Error: " . $stmt->error;
 }

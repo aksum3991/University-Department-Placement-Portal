@@ -81,14 +81,14 @@ $hasColleges = $collegesResult->num_rows > 0;
             <td><?php echo $student['email']; ?></td>
             <td><?php echo $student['gender']; ?></td>
             <td>
-                <a href="edit_student.php?id=<?php echo $student['user_id']; ?>">Edit</a>
-                <a href="delete_student.php?id=<?php echo $student['user_id']; ?>">Delete</a>
+                <a href="edit_student.php?user_id=<?php echo $student['user_id']; ?>">Edit</a>
+                <a href="delete_student.php?user_id=<?php echo $student['user_id']; ?>">Delete</a>
             </td>
         </tr>
         <?php endwhile; ?>
     </table>
 
-    <h2>Registrars</h2>
+    <!-- <h2>Registrars</h2>
     <table>
         <tr>
             <th>ID</th>
@@ -107,7 +107,7 @@ $hasColleges = $collegesResult->num_rows > 0;
             </td>
         </tr>
         <?php endwhile; ?>
-    </table>
+    </table> -->
 
     <h2>Colleges</h2>
     <table>
@@ -150,11 +150,21 @@ $hasColleges = $collegesResult->num_rows > 0;
     </table>
 
     <h2>Add College</h2>
-    <form action="add_college.php" method="POST">
-        <label for="college_name">College Name:</label>
-        <input type="text" id="college_name" name="college_name" required>
-        <button type="submit">Add College</button>
-    </form>
+<form action="add_college.php" method="POST">
+    <label for="college_name">College Name:</label>
+    <input type="text" id="college_name" name="college_name" required>
+    
+    <label for="college_category">College Category:</label>
+    <select id="college_category" name="college_category" required>
+        <option value=""></option>
+        <option value="Natural Science">Natural Science</option>
+        <option value="Engineering and Technology">Engineering and Technology</option>
+        <option value="Health Science">Health Science</option>
+    </select>
+    
+    <button type="submit">Add College</button>
+</form>
+
 
     <?php if ($hasColleges): ?>
     <h2>Add Department</h2>
@@ -163,13 +173,12 @@ $hasColleges = $collegesResult->num_rows > 0;
         <select id="college_id" name="college_id" required>
             <option value=""></option>
             <?php while ($college = $collegesResult->fetch_assoc()): ?>
-            <option value="<?php echo $college['college_id']; ?>"><?php echo $college['college_name']; ?></option>
+            <option value="<?php echo $college['college_id']; ?>"><?php echo $college['college_category']; ?></option>
             <?php endwhile; ?>
         </select>
         
         <label for="department_name">Department Name:</label>
         <input type="text" id="department_name" name="department_name" required>
-        
         <label for="intake_capacity">Intake Capacity:</label>
         <input type="number" id="intake_capacity" name="intake_capacity" required>
         

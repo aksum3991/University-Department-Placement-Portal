@@ -50,9 +50,9 @@ $student_scores = [];
 
 while ($student = $students->fetch_assoc()) {
     $gpa_score = ($student['gpa'] / 4.0) * 50;  // Assuming GPA is out of 4.0
-    $entrance_exam_score = round(($student['entrance_exam'] / 700) * 20,2);  // Assuming entrance exam is out of 100
+    $entrance_exam_score = round(($student['entrance_exam'] / 700) * 20, 2);  // Assuming entrance exam is out of 700
     $total_score = $gpa_score + $entrance_exam_score;
-    
+
     if ($student['gender'] == 'female') {
         $total_score += 5;  // Add bonus for female students
     }

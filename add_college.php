@@ -7,21 +7,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if user is logged in as admin or registrar
+session_start();
+if (!isset($_SESSION["role_id"]) || ($_SESSION["role_id"] !=1)) {
+    header("Location: login.html");
+    exit();
+}
+
+// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $college_name = $_POST["college_name"];
+    $college_name = $conn->real_escape_string($_POST['college_name']);
+    $college_category = $conn->real_escape_string($_POST['college_category']);
 
-    $stmt = $conn->prepare("INSERT INTO colleges (college_name, intake_capacity) VALUES (?, 0)");
-    $stmt->bind_param("s", $college_name);
-
-    if ($stmt->execute()) {
-        // College added successfully
-        header("Location: admin.php");
+    // Insert the new college into the database
+    $sql = "INSERT INTO colleges (college_name, college_category) VALUES ('$college_name', '$college_category')";
+    if ($conn->query($sql) === TRUE) {
+        header("Location: admin.php"); // Redirect to the dashboard after successful insertion
         exit();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
-
-    $stmt->close();
 }
+
 $conn->close();
 ?>

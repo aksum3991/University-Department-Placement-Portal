@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt === false) {
             die("Prepare failed: " . $conn->error);
         }
-        $stmt->bind_param("iid", $user_id, $gpa, $entrance_exam);
+        $stmt->bind_param("idd", $user_id, $gpa, $entrance_exam);
     }
 
     if ($stmt->execute()) {
@@ -71,7 +71,7 @@ if (!isset($_GET['user_id'])) {
 }
 
 $user_id = $_GET['user_id'];
-$result = $conn->query("SELECT * FROM users WHERE user_id = $user_id AND role_id = 3");
+$result = $conn->query("SELECT u.*, r.gpa, r.entrance_exam FROM users u LEFT JOIN student_results r ON u.user_id = r.student_id WHERE u.user_id = $user_id AND u.role_id = 3");
 
 if ($result->num_rows != 1) {
     header("Location: registrar.php");
@@ -93,10 +93,10 @@ $student = $result->fetch_assoc();
     <form action="set_gpa_entrance_exam.php" method="POST">
         <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($student['user_id']); ?>">
         <label for="gpa">GPA:</label>
-        <input type="number" step="0.01" id="gpa" name="gpa" required>
+        <input type="number" step="0.01" id="gpa" name="gpa" value="<?php echo isset($student['gpa']) ? htmlspecialchars($student['gpa']) : ''; ?>" required max="4" min="0">
         <br>
         <label for="entrance_exam">Entrance Exam:</label>
-        <input type="number" id="entrance_exam" name="entrance_exam" required>
+        <input type="number" id="entrance_exam" name="entrance_exam" value="<?php echo isset($student['entrance_exam']) ? htmlspecialchars($student['entrance_exam']) : ''; ?>" required max="700" min="0">
         <br>
         <button type="submit">Submit</button>
     </form>

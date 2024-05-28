@@ -7,15 +7,15 @@ if ($conn->connect_error) {
 }
 
 session_start();
-if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] != 2) {
+if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] === 3) {
     header("Location: login.html");
     exit();
 }
 
-$department_id = $_GET['id'];
+$student_id = $_GET['user_id'];
 
-$stmt = $conn->prepare("DELETE FROM departments WHERE department_id=?");
-$stmt->bind_param("i", $department_id);
+$stmt = $conn->prepare("DELETE FROM users WHERE user_id=? AND role_id=3");
+$stmt->bind_param("i", $student_id);
 
 if ($stmt->execute()) {
     header("Location: registrar.php");

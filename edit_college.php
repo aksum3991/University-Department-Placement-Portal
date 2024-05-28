@@ -34,8 +34,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sdi", $college_name, $min_college_entrance_result, $college_id);
     
     if ($stmt->execute()) {
-        header("Location: registrar.php");
+        if("role_id"===2){
+
+            header("Location: registrar.php");
+            exit();
+        }
+    else if("role_id" ===1){
+        header("Location: admin.php");
         exit();
+    }
     } else {
         echo "Error: " . $stmt->error;
     }

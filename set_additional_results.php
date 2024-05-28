@@ -1,4 +1,4 @@
-<? php
+<?php
 // Database connection
 require_once('config.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -17,8 +17,9 @@ if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] != 2) {
 }
 
 // Fetch student details
-if (isset($_GET['user_id'])) {
+if (isset($_GET['user_id']) && isset($_GET['type'])) {
     $user_id = $_GET['user_id'];
+    $type = $_GET['type'];
     $student = $conn->query("
         SELECT u.*, r.gpa, r.entrance_exam, a.second_sem_gpa, a.coc_exam_result, c.college_category
         FROM users u
@@ -33,7 +34,7 @@ if (isset($_GET['user_id'])) {
     }
     $student = $student->fetch_assoc();
 } else {
-    die("No student ID provided.");
+    die("No student ID or type provided.");
 }
 
 // Handle form submission
@@ -67,28 +68,23 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Set Additional Results</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <h1>Set Additional Results</h1>
     <form method="post">
-        <?php if ($student['college_category'] == 'Natural Science' || $student['college_category'] == 'Engineering and Technology'): ?>
-        <label for="second_sem_gpa">Second Semester GPA</label>
-        <input type="number" step="0.01" name="second_sem_gpa"
-            value="<?php echo htmlspecialchars($student['second_sem_gpa']); ?>">
-        <?php elseif ($student['college_category'] == 'Health Science'): ?>
-        <label for="coc_exam_result">CoC Exam Result</label>
-        <input type="number" step="0.01" name="coc_exam_result"
-            value="<?php echo htmlspecialchars($student['coc_exam_result']); ?>">
+        <?php if ($type == 'second_sem_gpa'): ?>
+            <label for="second_sem_gpa">Second Semester GPA</label>
+            <input type="number" step="0.01" name="second_sem_gpa" value="<?php echo htmlspecialchars($student['second_sem_gpa']); ?>">
+        <?php elseif ($type == 'coc_exam_result'): ?>
+            <label for="coc_exam_result">CoC Exam Result</label>
+            <input type="number" step="0.01" name="coc_exam_result" value="<?php echo htmlspecialchars($student['coc_exam_result']); ?>">
         <?php endif; ?>
         <button type="submit">Save</button>
     </form>
 </body>
-
 </html>

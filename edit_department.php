@@ -3,7 +3,7 @@
 session_start();
 
 // Check if user is logged in as registrar
-if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] != 2) {
+if (!isset($_SESSION["role_id"]) || $_SESSION["role_id"] === 3) {
     header("Location: login.html");
     exit();
 }
@@ -39,8 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sidi", $department_name, $intake_capacity, $min_department_entrance_result, $department_id);
     $stmt->execute();
     
-    header("Location: registrar.php");
-    exit();
+    if($_SESSION["role_id"] ===2 ){
+        header("Location: registrar.php");
+      exit();
+    }
+    else if($_SESSION["role_id"] === 1){
+        header("Location: admin.php"); 
+        exit();
+    }
 }
 ?>
 <!DOCTYPE html>
